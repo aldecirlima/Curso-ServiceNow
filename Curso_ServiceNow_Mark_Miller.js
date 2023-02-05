@@ -296,5 +296,66 @@ gs.print(greetingsMessage + ", it is now "
 	+ gt.getMinutesLocalTime() + "m.");
 
 
+// *************************************
+// Método log recebe dois argumentos, mensagem e a fonte de onde vem o log
+gs.log('This is a log message', 'fonte_exemplo');
+
+// Metodo error 
+gs.error('This is an error message');
+
+// Metodo warn
+gs.warn('This is a warn message');
+
+// Metodo addErrorMessage e addInfoMessage
+gs.addInfoMessage('Welcome to ServiceNow 201: Development! This is an info message.');	
+gs.addErrorMessage('Welcome to ServiceNow 201: Development! This is an error message.');
 
 
+// Metodo beginningOfLastMonth
+gs.print(gs.beginningOfLastMonth());
+
+// Metodo generateGUID
+gs.print(gs.generateGUID());
+
+// Metodo getMessage -- Não consegui usar nos exercícios.
+gs.getMessage('Sum');
+
+// Metodo getProperty
+gs.print('Hello ' + gs.getProperty('servicenow.201.hello.world'));
+
+// Metodo setProperty
+gs.setProperty('servicenow.201.hello.world', 'testing');
+
+// Metodo getUser
+gs.print(gs.getUser());
+
+// Metodo getDisplayName
+gs.print(gs.getUser().getDisplayName());
+
+// Metodo getFirstName
+gs.print(gs.getUser().getFirstName());
+
+// Metodo getLocation
+gs.print(gs.getUser().getLocation());
+
+// Metodo getUserRoles
+gs.print(gs.getUser().getUserRoles());
+
+// Metodo getUserID
+gs.print(gs.getUserID());
+
+// Exemplo de uso do metodo getUserID
+var incidentGR = new GlideRecord('incident');
+incidentGR.addQuery('caller_id', gs.getUserID());
+incidentGR.query();
+while(incidentGR.next()) {
+	gs.print('Incident ' + incidentGR.number);
+}
+
+// metodo getEncodedQuery
+var incidentGR = new GlideRecord('incident');
+incidentGR.addQuery('caller_id', gs.getUserID());
+incidentGR.query();
+gs.print(incidentGR.getEncodedQuery());
+
+ // Parei no método gs.hasRole() 13:43min
