@@ -352,10 +352,54 @@ while(incidentGR.next()) {
 	gs.print('Incident ' + incidentGR.number);
 }
 
-// metodo getEncodedQuery
+// Metodo getEncodedQuery
 var incidentGR = new GlideRecord('incident');
 incidentGR.addQuery('caller_id', gs.getUserID());
 incidentGR.query();
 gs.print(incidentGR.getEncodedQuery());
 
- // Parei no método gs.hasRole() 13:43min
+
+// Metodo hasRole
+if(gs.hasRole('itil') || ga.hasRole('admin')) {
+	gs.print('The current user has ITIL or Admin');
+}
+
+// Metodo getSession
+gs.print(gs.getSession());
+
+// Metodo isLoggedIn(está logado)
+gs.print(gs.getSession().isLoggedIn());
+
+// Metodo nil (checa se o valor é vazio)
+var incidentGR = new GlideRecord('incident');
+incidentGR.query();
+while(incidentGR.next()){
+		if(gs.nil(incidentGR.short_description)) {
+			gs.print('The incident (' + incidentGR.number + 
+				') has no short description' + incidentGR.short_description);
+	}
+}
+
+
+// Metodo tableExists (verifica se a tabela informada existe)
+gs.print(gs.tableExists('incident'));
+
+// Metodo xmlToJSON
+var xmlString = '<root><test>Some XML</test><test1>Some more XML</test1></root>';
+var json = gs.xmlToJSON(xmlString);
+gs.print(json.root.test);
+gs.print(json.root.test1);
+
+// eventQueue (fila de eventos)
+gs.eventQueue('servicenow.201.hello.world');
+
+
+// Pegando a hora local.
+
+var gt = new GlideTime();
+gt.setTimeZone('America/Sao_Paulo');
+
+gs.print(gt.getLocalDate());
+var today = new GlideDateTime(gt.getLocalDate()).getDate();
+gs.print(today);
+gs.print(today.getLocalTime().getByFormat('hh:mm:ss'));
