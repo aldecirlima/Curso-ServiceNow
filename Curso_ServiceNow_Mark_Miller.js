@@ -403,3 +403,47 @@ gs.print(gt.getLocalDate());
 var today = new GlideDateTime(gt.getLocalDate()).getDate();
 gs.print(today);
 gs.print(today.getLocalTime().getByFormat('hh:mm:ss'));
+
+
+
+
+// *************************************************************************
+
+// SEÇÃO 6
+
+// Para acessar o executor de código do lado cliente em Servicenow
+// 		pressione Ctrl + Shift + J com o navegador aberto.
+
+// Ao pressionar as telas acima em um formulário podemos executar o comando
+// 		abaixo para imprimir no console algumas informações do form.
+console.dir(g_form);
+
+// Metodo getValue
+var fieldValue = g_form.getValue('category');
+alert(fieldValue);
+
+// Metodo setValue(field, value)
+g_form.setValue('category', 'software');
+
+// Metodo clearValue(field)
+g_form.clearValue('category');
+
+// Metodo save
+g_form.save();
+
+// Metodo setDisabled(field, false/true)
+g_form.setDisabled('category', true);
+
+// Metodo hideRelatedLists() & showRelatedLists()
+g_form.hideRelatedLists();
+
+g_form.showRelatedLists();
+
+// Metodo isMandatory(field) and setMandatory
+g_form.setMandatory('category', true);
+alert(g_form.isMandatory('category'));
+
+// Metodo isNewRecord
+var isNewRecord = g_form.isNewRecord();
+alert('Is this a new record? ' + isNewRecord ? 'Yes.' : 'No.');
+
