@@ -404,7 +404,7 @@ var today = new GlideDateTime(gt.getLocalDate()).getDate();
 gs.print(today);
 gs.print(today.getLocalTime().getByFormat('hh:mm:ss'));
 
-
+// ****** Fim da seção 5 *********
 
 
 // *************************************************************************
@@ -461,3 +461,23 @@ alert(g_form.getLabelOf('category'));
 var tableName = g_form.getTablaName();
 alert('Table: ' + tableName);
 
+
+// *******************************
+// GlideUser Properties
+// Metodo de acesso "g_user" -> client-side
+alert('Hello ' + g_user.firstName + ' ' + g_user.lastName 
+	+ '. Your user ID is: ' + g_user.userID);
+
+// Metodo getFullName
+alert('Hello ' + g_user.getFullName());
+
+// Metodo hasRoles
+alert('Do you have any roles? ' + g_user.hasRoles());
+
+// Metodo hasRole
+alert('Do you have the ITIL role? ' + g_user.hasRole('itil')); // Sempre retornando true - Verificar
+
+// userName property
+alert('Your username is: ' + g_user.userName);
+
+// ******* Fim da seção 6 ***********
