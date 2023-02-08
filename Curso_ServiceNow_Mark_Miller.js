@@ -434,7 +434,7 @@ g_form.save();
 // Metodo setDisabled(field, false/true)
 g_form.setDisabled('category', true);
 
-// Metodo hideRelatedLists() & showRelatedLists()
+// Metodos hideRelatedLists() & showRelatedLists()
 g_form.hideRelatedLists();
 
 g_form.showRelatedLists();
@@ -445,5 +445,19 @@ alert(g_form.isMandatory('category'));
 
 // Metodo isNewRecord
 var isNewRecord = g_form.isNewRecord();
-alert('Is this a new record? ' + isNewRecord ? 'Yes.' : 'No.');
+alert('Is this a new record? ' + (isNewRecord ? 'Yes.' : 'No.'));
+
+// Metodos addInfoMessage() & addErrorMessage()
+g_form.addInfoMessage('Hello 201 students!');
+g_form.addErrorMessage('Heeeeeeeelp!');
+
+// Metodo clearMessages
+g_form.clearMessages();
+
+// Metodo getLabelOf(field)
+alert(g_form.getLabelOf('category'));
+
+// Metodo getTableName
+var tableName = g_form.getTablaName();
+alert('Table: ' + tableName);
 
