@@ -481,3 +481,27 @@ alert('Do you have the ITIL role? ' + g_user.hasRole('itil')); // Sempre retorna
 alert('Your username is: ' + g_user.userName);
 
 // ******* Fim da seção 6 ***********
+
+// *************************************************************
+// Seção 7 GlideAjax
+
+// Obs: Script Includes somente podem ser executadas se invocadas a partir de outra fonte.
+
+// Script includes usadas para GlideAjax devem ser marcadas com a caixa de seleção de 
+// 	callable do cliente definica como true.
+
+// Usar sempre o parâmetro sysparm_name para chamar o primeiro método em um script include
+
+function onLoad() {
+   
+   var ga = new GlideAjax('ServiceNow201GlideAjax');
+   ga.addParam('sysparm_name', 'sayHello');
+   ga.getXML(ajaxProcessor);
+   
+}
+
+
+function ajaxProcessor(response) {
+	var answer = response.responseXML.documentElement.getAttribute('answer');
+	g_form.setValue('short_description', answer);
+}
