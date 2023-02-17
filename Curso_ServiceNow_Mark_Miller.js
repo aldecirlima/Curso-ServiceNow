@@ -505,3 +505,84 @@ function ajaxProcessor(response) {
 	var answer = response.responseXML.documentElement.getAttribute('answer');
 	g_form.setValue('short_description', answer);
 }
+
+// *****************************************
+
+var ServiceNow201GlideAjax = Class.create();
+ServiceNow201GlideAjax.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+
+	getIncidentStatus: function() {
+		var incidentNumber = this.getParameter('sysparm_incident_number');
+		if (!gs.nil(incidentNumber)) {
+			var incidentGR = new GlideRecord('incident');
+			incidentGR.get('number', incidentNumber);
+			return incidentGR.state.getDisplayValue();
+		} else {
+			return 'No incident was found';
+		}
+	},
+
+	getLatestIncidents: function() {
+		var incidents = [];
+		var limit = parseInt(this.getParameter('sysparm_limit'));
+		if(!gs.nil(limit) && typeof limit == 'number') {
+			var incidentGR = new GlideRecord('incident');
+			incidentGR.orderByDesc('sys_created_on');
+			incidentGR.setLimit(limit);
+			incidentGR.query();
+			while(incidentGR.next()) {
+				var record = {};
+				record.number = incidentGR.number.getDisplayValue();
+				record.sysID = incidentGR.sys_id.getDisplayValue();
+				record.shortDescription = incidentGR.short_description.getDisplayValue();
+				incidents.push(record);
+			}
+			return new JSON().encode(incidents);
+		} else {
+			return 'Something \'t right...';
+		}
+	},
+
+
+	sayHello: function() {
+		return 'Hello world!';
+	},
+	
+    type: 'ServiceNow201GlideAjax'
+});
+
+
+// *********************************************
+// UI Page Scripts **********************
+
+// Client script 1
+var checkIncident = setInterval(function() {
+	processRequest();
+}, 5000);
+
+function processRequest() {
+	var ga = new GlideAjax('ServiceNow201GlideAjax');
+	ga.addParam('sysparm_name', 'getIncidentStatus');
+	ga.addParam('sysparm_incident_number', 'INC0010024');
+	ga.getXML(ajaxProcessor);
+}
+
+function ajaxProcessor(response) {
+	var answer = response.responseXML.documentElement.getAttribute('answer');
+	console.log('Status: ' + answer);
+}
+
+// Client script 2
+var ga = new GlideAjax('ServiceNow201GlideAjax');
+ga.addParam('sysparm_name', 'getLatestIncidents');
+ga.addParam('sysparm_limit', '5');
+ga.getXML(ajaxProcessor);
+
+function ajaxProcessor(response) {
+	console.log('Response payload: ' + response);
+	var answer = response.responseXML.documentElement.getAttribute('answer');
+	console.log('Answer: ' + answer);
+	var json = answer.evalJSON();
+	console.log('JSON: ' + json);
+	console.log(json[0].shortDescription);
+}
