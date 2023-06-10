@@ -586,3 +586,22 @@ function ajaxProcessor(response) {
 	console.log('JSON: ' + json);
 	console.log(json[0].shortDescription);
 }
+
+
+// Função para validar usuário do departamento
+
+function onChange(control, oldValue, newValue, isLoading) {
+    if (isLoading || newValue == '') {
+        return;
+    }
+	// Obtém a referência do usuário
+    var usuarioref = g_form.getReference('responsavel_dependencia', comparaIds);
+}
+
+// Compara a refêrência do departamento do usuário com a dependência selecionada
+function comparaIds(usuarioref) {
+    if (!(usuarioref.department === g_form.getValue('unidade_vistoriada'))) {
+        g_form.setValue('responsavel_dependencia', null);
+        g_form.addErrorMessage('Por favor selecione um funcionário lotado na unidade vistoriada.');
+    }
+}
